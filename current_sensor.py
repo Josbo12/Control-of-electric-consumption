@@ -13,51 +13,48 @@ PASSWORD = 'root'
 DBNAME = 'powerdb'
 
 
-def main():
-        
-        ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
-        host ='localhost'
-        port = 8086
-        metric = "powerdata"
-        series = []
 
 
-        try:
-               while 1:
-                       response = ser.readline()
-                       z = response.split(",")
-                       if len(z)>=2:
-                           print "Power 1: %s Watts" % z[0]
-                           print "Power 2: %s Watts" % z[1]
-                           print "Power 3: %s Watts" % z[2][:-2]
-                       now = datetime.datetime.today()
-                       hostName = "server-%d" % random.randint(1, 5)
-
-                       pointValues = {
-                               "time": now.strftime ("%Y-%m-%d %H:%M:%S"),
-                               "measurement": metric,
-                               "columns": ["POWER_1","POWER_2","POWER_3"],
-                               "fields":  [z[0], z[1], z[2]],
-                               "tags": {
-                                   "hostName": hostName,
-                               },
-                           }
-                       series.append(pointValues)
-                       print(series)
-
-                       client = InfluxDBClient(host, port, USER, PASSWORD, DBNAME)
-
-                       retention_policy = 'awesome_policy'
-                       client.create_retention_policy(retention_policy, '3d', 3, default=True)
+ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+host ='localhost'
+port = 8086
+metric = "powerdata"
+series = []
 
 
-                       client.write_points(series, retention_policy=retention_policy)
+try:
+       while 1:
+               response = ser.readline()
+               z = response.split(",")
+               if len(z)>=2:
+                   print "Power 1: %s Watts" % z[0]
+                   print "Power 2: %s Watts" % z[1]
+                   print "Power 3: %s Watts" % z[2][:-2]
+               now = datetime.datetime.today()
+               hostName = "server-%d" % random.randint(1, 5)
 
-                       time.sleep(10)
+               pointValues = {
+                       "time": now.strftime ("%Y-%m-%d %H:%M:%S"),
+                       "measurement": metric,
+                       "columns": ["POWER_1","POWER_2","POWER_3"],
+                       "fields":  [z[0], z[1], z[2]],
+                       "tags": {
+                           "hostName": hostName,
+                       },
+                   }
+               series.append(pointValues)
+               print(series)
+
+               client = InfluxDBClient(host, port, USER, PASSWORD, DBNAME)
+
+               retention_policy = 'awesome_policy'
+               client.create_retention_policy(retention_policy, '3d', 3, default=True)
 
 
-        except KeyboardInterrupt:
-               ser.close()
+               client.write_points(series, retention_policy=retention_policy)
 
-if __name__ == '__main__':
-        main()
+               time.sleep(10)
+
+
+except KeyboardInterrupt:
+       ser.close()

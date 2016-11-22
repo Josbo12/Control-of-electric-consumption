@@ -25,6 +25,7 @@ def main():
                while 1:
                        response = ser.readline()
                        z = response.split(",")
+                       now = datetime.datetime.today()
                        if len(z)>=2:
                                print "Power 1: %s Watts" % z[0]
                                print "Power 2: %s Watts" % z[1]

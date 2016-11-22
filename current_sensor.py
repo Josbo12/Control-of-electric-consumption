@@ -19,34 +19,57 @@ ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
 host ='localhost'
 port = 8086
 metric = "powerdata"
-series = []
 
 
-try:
-       while 1:
-               response = ser.readline()
-               z = response.split(",")
-               if len(z)>=2:
-                   print "Power 1: %s Watts" % z[0]
-                   print "Power 2: %s Watts" % z[1]
-                  # print "Power 3: %s Watts" % z[2][:-2]
+class PowerServer(object):
+
+        def __init__(self):
+            super(PowerServer, self).__init__()
+            self.z = [0,0]
+            self.series = []
+
+        def read_sensor(self):
+
+                try:
+                       while True:
+                               response = ser.readline()
+                               z = response.split(",")
+                               self.z[0] = 45
+                               self.z[1] = 50
+                               if len(z)>=2:
+                                   print "Power 1: %s Watts" % self.z[0]
+                                   print "Power 2: %s Watts" % self.z[1]
+                              # print "Power 3: %s Watts" % z[2][:-2]
+
+                               if self.insert_data() == True:
+                                   print " %s " % self.series
+                               else:
+                                   print "Error al introduir les dades"
+                               time.sleep(5)
+
+
+                except KeyboardInterrupt:
+                    print "Lectura aturada per teclat"
+                       #ser.close()
+
+        def insert_data(self):
+
+            try:
                now = datetime.datetime.today()
                hostName = "server-%d" % random.randint(1, 5)
-
                pointValues = {
                        "time": now.strftime ("%Y-%m-%d %H:%M:%S"),
                        "measurement": metric,
-                       "fields":{  
-                             "Power1": z[0],
-                             "Power2": z[1],
+                       "fields":{
+                             "Power1": self.z[0],
+                             "Power2": self.z[1],
                             # "Power3": z[2][:-2],
                          },
                        "tags": {
                            "hostName": hostName,
                        },
                    }
-               series.append(pointValues)
-               print(series)
+               self.series.append(pointValues)
 
                client = InfluxDBClient(host, port, USER, PASSWORD, DBNAME)
 
@@ -54,10 +77,11 @@ try:
                client.create_retention_policy(retention_policy, '3d', 3, default=True)
 
 
-               client.write_points(series, retention_policy=retention_policy)
+               client.write_points(self.series, retention_policy=retention_policy)
+               return True
+            except:
+               return False
 
-               time.sleep(10)
-
-
-except KeyboardInterrupt:
-       ser.close()
+if __name__ == "__main__":
+        c = PowerServer()
+        c.read_sensor()

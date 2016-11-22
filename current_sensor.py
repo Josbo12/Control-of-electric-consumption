@@ -11,10 +11,11 @@ import serial
 USER = 'root'
 PASSWORD = 'root'
 DBNAME = 'powerdb'
-ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+
 
 def main():
-
+        
+        ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
         host ='localhost'
         port = 8086
         metric = "powerdata"
@@ -25,15 +26,15 @@ def main():
                while 1:
                        response = ser.readline()
                        z = response.split(",")
-                       now = datetime.datetime.today()
                        if len(z)>=2:
-                               print "Power 1: %s Watts" % z[0]
-                               print "Power 2: %s Watts" % z[1]
-                               print "Power 3: %s Watts" % z[2][:-2]
+                           print "Power 1: %s Watts" % z[0]
+                           print "Power 2: %s Watts" % z[1]
+                           print "Power 3: %s Watts" % z[2][:-2]
+                       now = datetime.datetime.today()
+                       hostName = "server-%d" % random.randint(1, 5)
 
                        pointValues = {
                                "time": now.strftime ("%Y-%m-%d %H:%M:%S"),
-                               # "time": int(past_date.strftime('%s')),
                                "measurement": metric,
                                "columns": ["POWER_1","POWER_2","POWER_3"],
                                "fields":  [z[0], z[1], z[2]],

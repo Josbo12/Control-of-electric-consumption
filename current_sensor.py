@@ -29,15 +29,18 @@ try:
                if len(z)>=2:
                    print "Power 1: %s Watts" % z[0]
                    print "Power 2: %s Watts" % z[1]
-                   print "Power 3: %s Watts" % z[2][:-2]
+                  # print "Power 3: %s Watts" % z[2][:-2]
                now = datetime.datetime.today()
                hostName = "server-%d" % random.randint(1, 5)
 
                pointValues = {
                        "time": now.strftime ("%Y-%m-%d %H:%M:%S"),
                        "measurement": metric,
-                       "columns": ["POWER_1","POWER_2","POWER_3"],
-                       "fields":  [z[0], z[1], z[2]],
+                       "fields":{  
+                             "Power1": z[0],
+                             "Power2": z[1],
+                            # "Power3": z[2][:-2],
+                         },
                        "tags": {
                            "hostName": hostName,
                        },

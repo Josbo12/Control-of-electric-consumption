@@ -34,17 +34,15 @@ class PowerServer(object):
                        while True:
                                response = ser.readline()
                                z = response.split(",")
-                               self.z[0] = 45
-                               self.z[1] = 50
                                if len(z)>=2:
                                    print "Power 1: %s Watts" % self.z[0]
                                    print "Power 2: %s Watts" % self.z[1]
-                              # print "Power 3: %s Watts" % z[2][:-2]
+                                 # print "Power 3: %s Watts" % z[2][:-2]
 
                                if self.insert_data() == True:
                                    print " %s " % self.series
                                else:
-                                   print "Error al introduir les dades"
+                                   print "Error al introduir a la base de dades"
                                time.sleep(5)
 
 
@@ -72,12 +70,10 @@ class PowerServer(object):
                self.series.append(pointValues)
 
                client = InfluxDBClient(host, port, USER, PASSWORD, DBNAME)
-
                retention_policy = 'awesome_policy'
                client.create_retention_policy(retention_policy, '3d', 3, default=True)
-
-
                client.write_points(self.series, retention_policy=retention_policy)
+
                return True
             except:
                return False

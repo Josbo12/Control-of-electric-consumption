@@ -36,15 +36,17 @@ class PowerServer(object):
                                self.z = response.split(",")
                                self.z.pop()
                                self.z = map(float, self.z)
-                               self.z[0]=int(self.z[0])
-                               self.z[1]=int(self.z[1])
+                               for i in self.z:
+                                   self.z[i]=int(self.z[i])
+                                 #self.z[1]=int(self.z[1])
 
                                if len(self.z)>=2:
 
                                    print "Power 1: %s  Watts" % self.z[0]
                                    print "Power 2: %s  Watts" % self.z[1]
+                                   self.insert_data()
 
-                               self.insert_data()
+                               time.sleep(5)
 
                 except KeyboardInterrupt:
                     print "Lectura aturada per teclat"
@@ -54,7 +56,7 @@ class PowerServer(object):
 
             try:
                now = datetime.datetime.today()
-               hostName = "server-%d" % random.randint(1, 5)
+               #hostName = "server-%d" % random.randint(1, 5)
                pointValues = {
                        "time": now.strftime ("%Y-%m-%d %H:%M:%S"),
                        "measurement": metric,
@@ -63,9 +65,6 @@ class PowerServer(object):
                              "Power2": self.z[1],
                             # "Power3": z[2][:-2],
                          },
-                       "tags": {
-                           "hostName": hostName,
-                       },
                    }
                self.series.append(pointValues)
 
@@ -73,10 +72,10 @@ class PowerServer(object):
                retention_policy = 'awesome_policy'
                client.create_retention_policy(retention_policy, '3d', 3, default=True)
                client.write_points(self.series, retention_policy=retention_policy)
-                  
+
            except ValueError:
-                  print "Error al introduir les dades
-                  "
+                  print "Error al introduir les dades"
+
 if __name__ == "__main__":
         c = PowerServer()
         c.read_sensor()

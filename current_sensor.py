@@ -10,7 +10,7 @@ import serial
 
 USER = 'root'
 PASSWORD = 'root'
-DBNAME = 'powerdb'
+DBNAME = 'diferencial_db'
 
 ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
 host ='localhost'
@@ -23,7 +23,7 @@ class PowerServer(object):
         def __init__(self):
             super(PowerServer, self).__init__()
 
-            
+
 
         def read_sensor(self):
 
@@ -33,24 +33,24 @@ class PowerServer(object):
                                self.z = response.split(",")
                                self.z.pop()
                                self.z = map(float, self.z)
-                               
+
 
                                for i in range(len(self.z)):
                                    self.z[i]=int(self.z[i])
-                                
+
 
                                if len(self.z)>=2:
-                                   #print "hora %s " % datetime.datetime.today()                             
-                                   print ("Hora:"+str(datetime.datetime.today())+ "        Power 1: "+str(self.z[0])+
-                                               " Watts      Power 2: "+str(self.z[1])+"  Watts") 
+                                   #print "hora %s " % datetime.datetime.today()
+                                   #print ("Hora:"+str(datetime.datetime.today())+ "        Power 1: "+str(self.z[0])+
+                                   #           " Watts      Power 2: "+str(self.z[1])+"  Watts")
                                    #print "Power 2: %s  Watts" % self.z[1]
                                    self.insert_data()
 
-                               
+
 
                 except KeyboardInterrupt:
                     print "Lectura aturada per teclat"
-                       
+
 
         def insert_data(self):
 
@@ -65,7 +65,7 @@ class PowerServer(object):
                              "Power2": self.z[1],
                          },
                    }
-               
+
                series.append(pointValues)
 
                client = InfluxDBClient(host, port, USER, PASSWORD, DBNAME)
@@ -77,7 +77,7 @@ class PowerServer(object):
                   print "Error al introduir les dades"
 
 if __name__ == "__main__":
-        
+
         print " 'Control of electric consumption' "
         c = PowerServer()
         c.read_sensor()

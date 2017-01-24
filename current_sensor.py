@@ -15,8 +15,9 @@ DBNAME = 'diferencial_db'
 ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
 host ='localhost'
 port = 8086
-metric = "powerdata"
-
+#metric = "powerdata"
+#metric = "dif2_llum"
+metric = "dif2_force"
 
 class PowerServer(object):
 
@@ -34,18 +35,11 @@ class PowerServer(object):
                                self.z.pop()
                                self.z = map(float, self.z)
 
-
                                for i in range(len(self.z)):
                                    self.z[i]=int(self.z[i])
 
-
                                if len(self.z)>=2:
-                                   #print "hora %s " % datetime.datetime.today()
-                                   #print ("Hora:"+str(datetime.datetime.today())+ "        Power 1: "+str(self.z[0])+
-                                   #           " Watts      Power 2: "+str(self.z[1])+"  Watts")
-                                   #print "Power 2: %s  Watts" % self.z[1]
                                    self.insert_data()
-
 
 
                 except KeyboardInterrupt:
@@ -58,7 +52,6 @@ class PowerServer(object):
                series=[]
                now = datetime.datetime.today()
                pointValues = {
-                       #"time": now.strftime ("%Y-%m-%d %H:%M:%S"),
                        "measurement": metric,
                        "fields":{
                              "Power1": self.z[0],

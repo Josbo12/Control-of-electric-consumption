@@ -15,9 +15,12 @@ DBNAME = 'diferencial_db'
 ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
 host ='localhost'
 port = 8086
-#metric = "powerdata"
-#metric = "dif2_llum"
-metric = "dif2_force"
+
+#metric = "llum_force"
+#metric = "trast1_trast2"
+#metric = "encim_aire"
+#metric = "rent_term2"
+metric = "dif1_dif2"
 
 class PowerServer(object):
 
@@ -40,6 +43,7 @@ class PowerServer(object):
 
                                if len(self.z)>=2:
                                    self.insert_data()
+                                  
 
 
                 except KeyboardInterrupt:
@@ -63,7 +67,7 @@ class PowerServer(object):
 
                client = InfluxDBClient(host, port, USER, PASSWORD, DBNAME)
                retention_policy = 'awesome_policy'
-               client.create_retention_policy(retention_policy, '3d', 3, default=True)
+               client.create_retention_policy(retention_policy, '20w', 3, default=True)
                client.write_points(series, retention_policy=retention_policy)
 
             except ValueError:

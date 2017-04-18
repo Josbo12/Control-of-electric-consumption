@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from influxdb import InfluxDBClient
 from influxdb.client import InfluxDBClientError
+from Tkinter import *
 import datetime
 import random
 import time
@@ -21,6 +22,14 @@ port = 8086
 #metric = "encim_aire"
 #metric = "rent_term2"
 metric = "dif1_dif2"
+
+
+class tkinter(object):
+
+        def __init__(self):
+            super(tkinter, self).__init__()
+
+
 
 class PowerServer(object):
 
@@ -43,7 +52,7 @@ class PowerServer(object):
 
                                if len(self.z)>=2:
                                    self.insert_data()
-                                  
+
 
 
                 except KeyboardInterrupt:

@@ -4,7 +4,7 @@ from influxdb.client import InfluxDBClientError
 import datetime
 import random
 import time
-import serial
+#import serial
 
 
 
@@ -43,7 +43,7 @@ class PowerServer(object):
 
                                if len(self.z)>=2:
                                    self.insert_data()
-                                  
+
 
 
                 except KeyboardInterrupt:

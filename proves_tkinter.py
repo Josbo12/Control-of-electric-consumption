@@ -3,6 +3,8 @@
 
 
 from Tkinter import *
+from tk_current_sensor import PowerServer
+from database import Database
 
 class Tkinter(object):
 
@@ -10,7 +12,8 @@ class Tkinter(object):
             super(Tkinter, self).__init__()
 
             #Inicialitzem la finestra emb les mides i el titol
-
+            self.database = Database()
+            self.sensor = PowerServer()
             self.app1 = Tk()
             self.app1.title("Control del consum electric")
             self.app1.geometry("500x300")
@@ -19,7 +22,7 @@ class Tkinter(object):
             #Insertem el text de les instruccions a seguir
             texto="""Instruccions d'us:
                      Primer de tot
-                     despressi has entes
+                     despres si has entes
                      prem continuar"""
             self.lbl = Label(self.app1,text=texto, justify= CENTER, pady=15)
             self.lbl.pack()
@@ -82,86 +85,113 @@ class Tkinter(object):
 
         def trifasic(self):
 
-            self.boto_mono.destroy()
-            self.boto_tri.destroy()
             self.selec = 3
-
             self.eleccio_base_dades()
 
         def eleccio_base_dades(self):
 
             #Això nomès passar
-            if self.monofasic == True:
 
-                self.boto_cont.destroy()
-                self.radiobutton1.destroy()
-                self.radiobutton2.destroy()
-                self.radiobutton3.destroy()
+            def crear_database():
+                    aa1 = self.txtbase.get()
+                    print aa1
+                    self.database.create_database(aa1)
+                    self.boto_comen = Button(self.app2,text="Començar",command=self.lectura_dades)
+                    self.boto_comen.pack()
+
+            self.destruir_finestra("app2")
+            self.nova_finestra()
+
+            text = "Especifica el nom de la base de dades\n i de cada linia de mesura:"
+            self.lbl = Label(self.app2,text=text, justify= CENTER, pady=15)
+            self.lbl.pack()
 
 
-
-            self.lbl.config(text="Especifica el nom de la base de dades\n i de cada linia de mesura:")
-
-            self.lbl_bd = Label(self.app1,text="Base de dades:")
-            self.lbl_bd.place(x=100, y=50)
+            self.lbl_bd = Label(self.app2,text="Base de dades:")
+            self.lbl_bd.pack()
             self.entradabase = StringVar()
-            self.txtbase = Entry(self.app1, textvariable=self.entradabase)
-            self.txtbase.place(x=200, y=50)
+            self.txtbase = Entry(self.app2, textvariable=self.entradabase)
+            self.txtbase.pack()
+            self.boto_guardar = Button(self.app2,text="Guardar",command=crear_database)
+            self.boto_guardar.pack()
 
 
-            self.boto_comen = Button(self.app1,text="Començar",command=self.lectura_dades)
-            self.boto_comen.place(x=400, y=250)
+
 
             #self.boto_enrere = Button(self.app,text="Anterior",command=self.monofasic)
             #self.boto_enrere.place(x=50, y=250)
 
-
-
-
+            print self.selec
             if self.selec <= 3:
 
-                self.lbl_pin1 = Label(self.app1,text="Pinça 1:")
-                self.lbl_pin1.place(x=100, y=100)
+                self.lbl_pin1 = Label(self.app2,text="Pinça 1:")
+                self.lbl_pin1.pack()
                 self.entrada1 = StringVar()
-                self.txtpin1 = Entry(self.app1, textvariable=self.entrada1)
-                self.txtpin1.place(x=200, y=100)
+                self.txtpin1 = Entry(self.app2, textvariable=self.entrada1)
+                self.txtpin1.pack()
 
 
             if self.selec != 1:
 
-                self.lbl_pin2 = Label(self.app1,text="Pinça 2:")
-                self.lbl_pin2.place(x=100, y=125)
+                self.lbl_pin2 = Label(self.app2,text="Pinça 2:")
+                self.lbl_pin2.pack()
 
                 self.entrada2 = StringVar()
-                self.txtpin2 = Entry(self.app1, textvariable=self.entrada2)
-                self.txtpin2.place(x=200, y=125)
+                self.txtpin2 = Entry(self.app2, textvariable=self.entrada2)
+                self.txtpin2.pack()
 
             if self.selec == 3:
 
-                self.lbl_pin3 = Label(self.app1,text="Pinça 3:")
-                self.lbl_pin3.place(x=100, y=150)
+                self.lbl_pin3 = Label(self.app2,text="Pinça 3:")
+                self.lbl_pin3.pack()
 
                 self.entrada3 = StringVar()
-                self.txtpin3 = Entry(self.app1, textvariable=self.entrada1)
-                self.txtpin3.place(x=200, y=150)
+                self.txtpin3 = Entry(self.app2, textvariable=self.entrada3)
+                self.txtpin3.pack()
 
 
 
 
-        def lectura_dades():
+
+        def lectura_dades(self):
+
+
+            self.destruir_finestra("app2")
+            self.nova_finestra()
+
+            if self.selec <= 3:
+                self.lbl_pin1 = Label(self.app2,text=self.entrada1)
+                self.lbl_pin1.pack()
+
+            if self.selec != 1:
+                self.lbl_pin2 = Label(self.app2,text=self.entrada2)
+                self.lbl_pin2.pack()
+
+            if self.selec == 3:
+                self.lbl_pin3 = Label(self.app2,text=self.entrada3)
+                self.lbl_pin3.pack()
+
+            while True:
+                self.sensor.read_sensor()
+                
+
             pass
+
+
+
 
         def nova_finestra(self):
 
             self.app2 = Tk()
             self.app2.title("Control del consum electric")
+            self.app2.geometry("500x300")
 
         def destruir_finestra(self, finestra):
 
-                if finestra == "app1":
-                    self.app1.destroy()
-                if finestra == "app2":
-                    self.app2.destroy()
+            if finestra == "app1":
+                self.app1.destroy()
+            if finestra == "app2":
+                self.app2.destroy()
                 #if finestra == "app3":
                 #    self.app3.destroy()
                 #if finestra == "app4":

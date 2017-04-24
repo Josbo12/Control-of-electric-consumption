@@ -40,9 +40,6 @@ class Tkinter(object):
             self.amagar_finestra("app1")
             self.nova_finestra()
 
-
-
-            #self.boto.destroy()
             text = "Escull el tipus d'instalació"
             self.lbl = Label(self.app2,text=text, justify= CENTER, pady=15)
             self.lbl.pack()
@@ -50,8 +47,6 @@ class Tkinter(object):
             #Crear dos botons mes per a eleccio del tipus d'instalacio
             self.boto_mono = Button(self.app2,text="Monofasic",command=self.monofasic)
             self.boto_tri = Button(self.app2,text="Trifasic",command=self.trifasic)
-            #self.boto_tri.place(x=310,y=50)
-            #self.boto_mono.place(x=210,y=50)
             self.boto_mono.pack()
             self.boto_tri.pack(side=RIGHT)
 
@@ -74,13 +69,6 @@ class Tkinter(object):
             self.radiobutton1.pack()
             self.radiobutton2.pack()
             self.radiobutton3.pack()
-            #self.radiobutton1.place(x=260,y=100)
-            #self.radiobutton2.place(x=260,y=150)
-            #self.radiobutton3.place(x=260,y=200)
-
-            #self.boto_cont = Button(self.app2,text="Continuar",command=self.eleccio_base_dades)
-            #self.boto_cont.place(x=260,y=250)
-            #self.monofasic = True
 
 
         def trifasic(self):
@@ -90,7 +78,7 @@ class Tkinter(object):
 
         def eleccio_base_dades(self):
 
-            #Això nomès passar
+
 
             def crear_database():
                     aa1 = self.txtbase.get()
@@ -115,13 +103,6 @@ class Tkinter(object):
             self.boto_guardar = Button(self.app2,text="Guardar",command=crear_database)
             self.boto_guardar.pack()
 
-
-
-
-            #self.boto_enrere = Button(self.app,text="Anterior",command=self.monofasic)
-            #self.boto_enrere.place(x=50, y=250)
-
-            print self.selec
             if self.selec <= 3:
 
                 self.lbl_pin1 = Label(self.app2,text="Pinça 1:")
@@ -150,9 +131,6 @@ class Tkinter(object):
                 self.txtpin3.pack()
 
 
-
-
-
         def lectura_dades(self):
 
 
@@ -173,11 +151,6 @@ class Tkinter(object):
 
             while True:
                 self.sensor.read_sensor()
-                
-
-            pass
-
-
 
 
         def nova_finestra(self):
@@ -192,10 +165,7 @@ class Tkinter(object):
                 self.app1.destroy()
             if finestra == "app2":
                 self.app2.destroy()
-                #if finestra == "app3":
-                #    self.app3.destroy()
-                #if finestra == "app4":
-                #    self.app4.destroy()
+
 
         def amagar_finestra(self, finestra):
 
@@ -210,10 +180,6 @@ class Tkinter(object):
                 self.app1.deiconify()
             if finestra == "app2":
                 self.app2.deiconify()
-
-
-
-
 
 
 if __name__ == "__main__":

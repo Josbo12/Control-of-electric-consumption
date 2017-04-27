@@ -16,8 +16,8 @@ class PowerServer(object):
 
         def read_sensor(self):
 
-                try:
-                       #while True:
+            #    try:
+
 
                                self.a = random.randrange(10)
                                self.b = random.randrange(50)
@@ -37,8 +37,8 @@ class PowerServer(object):
 
 
 
-                except KeyboardInterrupt:
-                    print "Lectura aturada per teclat"
+                #except KeyboardInterrupt:
+                #    print "Lectura aturada per teclat"
 
 
 

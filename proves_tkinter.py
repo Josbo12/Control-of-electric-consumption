@@ -28,6 +28,12 @@ class Tkinter(object):
             self.boto = Button(self.app1,text="Continuar",command=self.tipus_instalacio)
             self.boto.pack(pady=50)
 
+            self.sensor1 = StringVar()
+            self.sensor2 = StringVar()
+            self.sensor3 = StringVar()
+            self.sensor1.set("- - "+" W")
+            self.sensor2.set("- -"+" W")
+            self.sensor3.set("- -"+" W")
 
 
             self.app1.mainloop()
@@ -139,44 +145,42 @@ class Tkinter(object):
             self.destruir_finestra("app2")
             self.nova_finestra()
 
-            self.sensor.read_sensor()
-
-
             if self.linies <= 3:
-                self.lbl_pin1 = Label(self.app2,text=self.entrada1.get())
-                self.lbl_pin1.pack()
-                self.lbl_pin1 = Label(self.app2,text=self.sensor.a)
-                self.lbl_pin1.pack()
+                self.linia1 = Label(self.app2,text=self.entrada1.get())
+                self.linia1.pack()
+                self.lectura1 = Label(self.app2,text=self.sensor1.get())
+                self.lectura1.pack()
 
             if self.linies != 1:
-                self.lbl_pin1 = Label(self.app2,text=self.entrada2.get())
-                self.lbl_pin1.pack()
-                self.lbl_pin2 = Label(self.app2,text=self.sensor.b)
-                self.lbl_pin2.pack()
+                self.linia2 = Label(self.app2,text=self.entrada2.get())
+                self.linia2.pack()
+                self.lectura2 = Label(self.app2,text=self.sensor2.get())
+                self.lectura2.pack()
 
             if self.linies == 3:
-                self.lbl_pin1 = Label(self.app2,text=self.entrada3.get())
-                self.lbl_pin1.pack()
-                self.lbl_pin3 = Label(self.app2,text=self.sensor.c)
-                self.lbl_pin3.pack()
+                self.linia1 = Label(self.app2,text=self.entrada3.get())
+                self.linia1.pack()
+                self.lectura3 = Label(self.app2,text=self.sensor3.get())
+                self.lectura3.pack()
 
-            self.update()
+            self.actualitzar_dades()
 
-        def actualizar_dades(self):
+        def actualitzar_dades(self):
 
                 self.sensor.read_sensor()
 
                 if self.linies <= 3:
-                    self.lbl_pin1.config(text=self.sensor.a)
+                    self.sensor1.set(str(self.sensor.a)+" W")
+                    self.lectura1.config(text=self.sensor1.get())
                 if self.linies != 1:
-                    self.lbl_pin2.config(text=self.sensor.b)
+                    self.sensor2.set(str(self.sensor.b)+" W")
+                    self.lectura2.config(text=self.sensor2.get())
                 if self.linies == 3:
-                    self.lbl_pin3.config(text=self.sensor.c)
+                    self.sensor3.set(str(self.sensor.c)+" W")
+                    self.lectura3.config(text=self.sensor3.get())
 
                 self.app2.after(5000, self.actualitzar_dades)
-
-
-
+                print "5 segons"
 
 
         def nova_finestra(self):

@@ -7,6 +7,7 @@ from influxdb.client import InfluxDBClientError
 import datetime
 import random
 import time
+from ast import literal_eval
 
 
 class Database(object):
@@ -19,12 +20,13 @@ class Database(object):
             #ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
             self.host ='localhost'
             self.port = 8086
+            self.client = InfluxDBClient(self.host, self.port, self.USER, self.PASSWORD)
 
 
         def create_database(self, dbname):
 
-             client = InfluxDBClient(self.host, self.port, self.USER, self.PASSWORD, dbname)
-             client.create_database(dbname)
+
+             self.client.create_database(dbname)
 
         def insert_data(self):
             try:
@@ -43,11 +45,20 @@ class Database(object):
 
 
                    retention_policy = 'awesome_policy'
-                   client.create_retention_policy(retention_policy, '20w', 3, default=True)
-                   client.write_points(series, retention_policy=retention_policy)
+                   self.client.create_retention_policy(retention_policy, '20w', 3, default=True)
+                   self.client.write_points(series, retention_policy=retention_policy)
 
             except ValueError:
                 print "Error al introduir les dades"
+
+        def get_database(self):
+
+            self.llista_databses = []
+            dbs = self.client.get_list_database()
+        
+
+
+
 
 if __name__ == "__main__":
 

@@ -25,10 +25,13 @@ class Tkinter(object):
             self.app1.configure(background="LightCyan4")
 
             #TIpus i mides de lletres que utilitzarem
-            self.myFont = Font(family="Verdana", size=10)
+            self.myFont = Font(family="Verdana", size=12)
 
             #Insertem el text de les instruccions a seguir
-            self.lbl = Label(self.app1,text="\n\ninstruccions d'us \nPrimer de tot \ndespres\nprem continuar",justify=LEFT, font=self.myFont, bg="LightCyan4")
+            self.lbl = Label(self.app1,text="\n\n Instruccions d'us: \n\n Primer de tot assegura't \n de tenir conectades les pnces"
+                             "que utilitzaras.\n A la part superior de les pinces\n"
+                             " hi ha un fletxa que s'ha de col·locar en direcció de la corrent\n"
+                             " Per finalitzar, prem CONTINUAR.",justify=LEFT, font=self.myFont, bg="LightCyan4")
             self.lbl.pack()
 
             #Boto per continuar despres de llegir les instruccions

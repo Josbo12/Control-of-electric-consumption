@@ -207,7 +207,7 @@ class Tkinter(object):
 
             self.app2 =Tk()
             self.app2.title("Control del consum electric")
-            self.app2.geometry("500x300")
+            self.app2.geometry("800x480")
             self.app2.configure(background="LightCyan4")
 
 

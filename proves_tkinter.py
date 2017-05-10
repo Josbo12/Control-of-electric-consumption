@@ -51,7 +51,7 @@ class Tkinter(object):
             self.sensor2.set("- -"+" W")
             self.sensor3.set("- -"+" W")
 
-            self.database.get_database()
+            #self.database.get_database()
 
             self.app1.mainloop()
 

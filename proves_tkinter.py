@@ -22,21 +22,28 @@ class Tkinter(object):
             self.app1 = Tk()
             self.app1.title("Control del consum electric")
             self.app1.geometry("800x480")
-            self.app1.configure(background="LightCyan4")
+            #self.app1.configure(background="LightCyan4")
+            self.fondo = PhotoImage(file="fondo.gif")
+            self.lbl_Fondo = Label(self.app1, image=self.fondo).place(x=0,y=0)
 
             #TIpus i mides de lletres que utilitzarem
-            self.myFont = Font(family="Verdana", size=12)
+            self.myFont = Font(family="Verdana", size=16)
+            self.myFont2 = Font(family="Verdana",weight="bold", size=20)
 
             #Insertem el text de les instruccions a seguir
-            self.lbl = Label(self.app1,text="\n\n Instruccions d'us: \n\n Primer de tot assegura't \n de tenir conectades les pnces"
-                             "que utilitzaras.\n A la part superior de les pinces\n"
-                             " hi ha un fletxa que s'ha de col·locar en direcció de la corrent\n"
-                             " Per finalitzar, prem CONTINUAR.",justify=LEFT, font=self.myFont, bg="LightCyan4")
-            self.lbl.pack()
+            self.lbl = Label(self.app1,text=" Instruccions d'us:"
+                             "\n\n  Primer de tot assegura't\n"
+                             " de tenir conectades les pinces que utilitzaras.\n"
+                             "  A la part superior de les pinces hi ha un fletxa\n"
+                             " que s'ha de col·locar en direcció de la corrent"
+                             ,justify=LEFT, font=self.myFont,bg="ivory2", fg="black"
+                             ,padx=10, bd=2, relief=GROOVE)
+            self.lbl.place(x=200,y=100)
 
             #Boto per continuar despres de llegir les instruccions
-            self.boto = Button(self.app1,text="Continuar",command=self.tipus_instalacio, bg="LightCyan4", bd=3, activebackground="light yellow",relief=RIDGE )
-            self.boto.pack(pady=50)
+            self.boto = Button(self.app1,text="Continuar",font=self.myFont,command=self.tipus_instalacio,
+                                bg="ivory2", bd=3, activebackground="light yellow",relief=RIDGE, overrelief=GROOVE )
+            self.boto.place(x=350,y=400)
 
 
 #############################################COMBOBOX############################################
@@ -66,15 +73,19 @@ class Tkinter(object):
             self.nova_finestra()
 
 
-            text = "\nEscull el tipus d'instalació"
-            self.lbl = Label(self.app2,text=text, justify= CENTER, bg="plum1")
-            self.lbl.pack()
+            text = "Escull el tipus d'instalació"
+            self.lbl = Label(self.app2,text=text, justify= CENTER, font=self.myFont, bg="ivory2",padx=2)
+            self.lbl.place(x=250, y=100)
 
             #Crear dos botons mes per a eleccio del tipus d'instalacio
-            self.boto_mono = Button(self.app2,text="Monofasic",command=self.monofasic, bg="plum1")
-            self.boto_tri = Button(self.app2,text="Trifasic",command=self.trifasic, bg="plum1")
-            self.boto_mono.pack(side=LEFT, expand=YES, padx=70)
-            self.boto_tri.pack(side=LEFT, expand=YES, padx=70)
+            self.boto_mono = Button(self.app2,text="MONOFÀSIC",command=self.monofasic, bg="ivory2",
+                                     bd=3, activebackground="light yellow",relief=RIDGE,
+                                     overrelief=GROOVE, width=12, height=3, font=self.myFont2)
+            self.boto_tri = Button(self.app2,text="TRIFÀSIC",command=self.trifasic, bg="ivory2",
+                                     bd=3, activebackground="light yellow",relief=RIDGE,
+                                     overrelief=GROOVE, width=12, height=3, font=self.myFont2)
+            self.boto_mono.place(x=150,y=270)
+            self.boto_tri.place(x=410,y=270)
 
 
         def monofasic(self):
@@ -92,10 +103,11 @@ class Tkinter(object):
 
             #Crear text i botons de la finestra
             text = "Escull el nombre de linies a mesurar:"
-            self.lbl = Label(self.app2,text=text, justify= CENTER, pady=15).pack()
-            self.spin_linies = Spinbox(self.app2, from_=1, to=3, width=10)
-            self.spin_linies.pack()
-            self.boto_mono = Button(self.app2,text="Continuar",command=linies).pack()
+            self.lbl = Label(self.app2,text=text, font=self.myFont, justify= CENTER, pady=15)
+            self.lbl.place(x=190,y=100)
+            self.spin_linies = Spinbox(self.app2, font=self.myFont2, from_=1, to=3, width=10, borderwidth=2)
+            self.spin_linies.place(x=280,y=200)
+            self.boto_mono = Button(self.app2, text="Continuar", font=self.myFont, command=linies).place(x=325, y=300)
 
 
         def trifasic(self):
@@ -113,7 +125,7 @@ class Tkinter(object):
                 database = self.txtbase.get()
                 self.database.create_database(database)
                 self.boto_comen = Button(self.app2,text="Començar",command=self.lectura_dades)
-                self.boto_comen.pack()
+                self.boto_comen.place(x=360,y=375)
 
 
             self.destruir_finestra("app2")
@@ -121,43 +133,43 @@ class Tkinter(object):
 
             text = "Especifica el nom de la base de dades\n i de cada linia de mesura:"
             self.lbl = Label(self.app2,text=text, justify= CENTER, pady=15)
-            self.lbl.pack()
+            self.lbl.place(x=290, y=25)
 
             self.lbl_bd = Label(self.app2,text="Base de dades:")
-            self.lbl_bd.pack()
+            self.lbl_bd.place(x=360,y=100)
 
             self.entradabase = StringVar()
             self.txtbase = Entry(self.app2, textvariable=self.entradabase)
-            self.txtbase.pack()
+            self.txtbase.place(x=325, y=125)
             self.boto_guardar = Button(self.app2,text="Guardar",command=crear_database)
-            self.boto_guardar.pack()
+            self.boto_guardar.place(x=375,y=150)
 
             if self.linies <= 3:
 
                 self.lbl_pin1 = Label(self.app2,text="Pinça 1:")
-                self.lbl_pin1.pack()
+                self.lbl_pin1.place(x=385,y=200)
                 self.entrada1 = StringVar(self.app2, 'Pinça 1')
                 self.txtpin1 = Entry(self.app2, textvariable=self.entrada1)
-                self.txtpin1.pack()
+                self.txtpin1.place(x=325,y=225)
 
 
             if self.linies != 1:
 
                 self.lbl_pin2 = Label(self.app2,text="Pinça 2:")
-                self.lbl_pin2.pack()
+                self.lbl_pin2.place(x=385,y=250)
 
                 self.entrada2 = StringVar(self.app2, 'Pinça 2')
                 self.txtpin2 = Entry(self.app2, textvariable=self.entrada2)
-                self.txtpin2.pack()
+                self.txtpin2.place(x=325,y=275)
 
             if self.linies == 3:
 
                 self.lbl_pin3 = Label(self.app2,text="Pinça 3:")
-                self.lbl_pin3.pack()
+                self.lbl_pin3.place(x=385,y=300)
 
                 self.entrada3 = StringVar(self.app2, 'Pinça 3')
                 self.txtpin3 = Entry(self.app2, textvariable=self.entrada3)
-                self.txtpin3.pack()
+                self.txtpin3.place(x=325,y=325)
 
 
         def lectura_dades(self):
@@ -208,10 +220,11 @@ class Tkinter(object):
 
         def nova_finestra(self):
 
-            self.app2 =Tk()
+            self.app2 =tk.Toplevel()
             self.app2.title("Control del consum electric")
             self.app2.geometry("800x480")
-            self.app2.configure(background="LightCyan4")
+            self.fondo2 = PhotoImage(file="fondo.gif")
+            self.lbl_Fondo2 = Label(self.app2, image=self.fondo2).place(x=0,y=0)
 
 
         def destruir_finestra(self, finestra):

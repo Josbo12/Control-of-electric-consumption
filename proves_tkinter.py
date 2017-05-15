@@ -21,7 +21,7 @@ class Tkinter(object):
             self.sensor = PowerServer()
             self.app1 = Tk()
             self.app1.title("Control del consum electric")
-            self.app1.geometry("800x480")
+            self.app1.geometry("800x450")
             #self.app1.configure(background="LightCyan4")
             self.fondo = PhotoImage(file="fondo.gif")
             self.lbl_Fondo = Label(self.app1, image=self.fondo).place(x=0,y=0)
@@ -43,7 +43,7 @@ class Tkinter(object):
             #Boto per continuar despres de llegir les instruccions
             self.boto = Button(self.app1,text="Continuar",font=self.myFont,command=self.tipus_instalacio,
                                 bg="ivory2", bd=3, activebackground="light yellow",relief=RIDGE, overrelief=GROOVE )
-            self.boto.place(x=350,y=400)
+            self.boto.place(x=350,y=350)
 
 
 #############################################COMBOBOX############################################

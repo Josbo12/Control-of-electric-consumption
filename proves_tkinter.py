@@ -17,7 +17,6 @@ class Tkinter(object):
             super(Tkinter, self).__init__()
 
             #Inicialitzem la finestra emb les mides i el titol
-
             self.database = Database()
             self.sensor = PowerServer()
             self.app1 = Tk()
@@ -34,18 +33,18 @@ class Tkinter(object):
 
             #Insertem el text de les instruccions a seguir
             lbl = Label(self.app1,text=" Instruccions d'us:"
-                             "\n\n  Primer de tot assegura't\n"
-                             " de tenir conectades les pinces que utilitzaras.\n"
-                             "  A la part superior de les pinces hi ha un fletxa\n"
-                             " que s'ha de col·locar en direcció de la corrent"
-                             ,justify=LEFT, font=self.myFont,bg="khaki",
-                              highlightbackground="gold3", highlightthickness=3, padx=10, )
+                        "\n\n  Primer de tot assegura't\n"
+                        " de tenir conectades les pinces que utilitzaras.\n"
+                        "  A la part superior de les pinces hi ha un fletxa\n"
+                        " que s'ha de col·locar en direcció de la corrent",
+                         justify=LEFT, font=self.myFont,bg="khaki",
+                         highlightbackground="gold3", highlightthickness=3, padx=10, )
             lbl.place(x=150,y=100)
 
             #Boto per continuar despres de llegir les instruccions
             boto = Button(self.app1,text="Continuar",font=self.myFont,command=self.tipus_instalacio,
-                                bg="khaki", bd=3, activebackground="gold",relief=RIDGE, overrelief=GROOVE,
-                                highlightbackground="gold3", highlightthickness=3 )
+                          bg="khaki", bd=3, activebackground="gold",relief=RIDGE, overrelief=GROOVE,
+                          highlightbackground="gold3", highlightthickness=3 )
             boto.place(x=350,y=350)
 
             #Definim les variables de lectura i la seva estructura
@@ -56,7 +55,6 @@ class Tkinter(object):
             self.sensor2.set("- -"+" W")
             self.sensor3.set("- -"+" W")
 
-            #self.database.get_database()
 
             self.app1.mainloop()
 
@@ -183,21 +181,27 @@ class Tkinter(object):
             self.nova_finestra()
 
             if self.linies <= 3:
-                self.linia1 = Label(self.app2,text=self.entrada1.get()+':', font=self.myFont3, highlightbackground="gold3", highlightthickness=5, bg="khaki")
+                self.linia1 = Label(self.app2,text=self.entrada1.get()+':', font=self.myFont3,
+                                    highlightbackground="gold3", highlightthickness=5, bg="khaki")
                 self.linia1.place(x=100,y=100)
-                self.lectura1 = Label(self.app2,text=self.sensor1.get(), font=self.myFont3, padx=50, highlightbackground="navy", highlightthickness=5, bg="LightBlue1")
+                self.lectura1 = Label(self.app2,text=self.sensor1.get(), font=self.myFont3, padx=50,
+                                     highlightbackground="navy", highlightthickness=5, bg="LightBlue1")
                 self.lectura1.place(x=400,y=100)
 
             if self.linies != 1:
-                self.linia2 = Label(self.app2,text=self.entrada2.get()+':', font=self.myFont3, highlightbackground="gold3", highlightthickness=5, bg="khaki")
+                self.linia2 = Label(self.app2,text=self.entrada2.get()+':', font=self.myFont3,
+                                    highlightbackground="gold3", highlightthickness=5, bg="khaki")
                 self.linia2.place(x=100, y=200)
-                self.lectura2 = Label(self.app2,text=self.sensor2.get(), font=self.myFont3, padx=50, highlightbackground="navy", highlightthickness=5, bg="LightBlue1")
+                self.lectura2 = Label(self.app2,text=self.sensor2.get(), font=self.myFont3, padx=50,
+                                      highlightbackground="navy", highlightthickness=5, bg="LightBlue1")
                 self.lectura2.place(x=400, y=200)
 
             if self.linies == 3:
-                self.linia1 = Label(self.app2,text=self.entrada3.get()+':', font=self.myFont3, highlightbackground="gold3", highlightthickness=5, bg="khaki")
+                self.linia1 = Label(self.app2,text=self.entrada3.get()+':', font=self.myFont3,
+                                    highlightbackground="gold3", highlightthickness=5, bg="khaki")
                 self.linia1.place(x=100, y=300)
-                self.lectura3 = Label(self.app2,text=self.sensor3.get(), font=self.myFont3, padx=50, highlightbackground="navy", highlightthickness=5, bg="LightBlue1")
+                self.lectura3 = Label(self.app2,text=self.sensor3.get(), font=self.myFont3, padx=50,
+                                      highlightbackground="navy", highlightthickness=5, bg="LightBlue1")
                 self.lectura3.place(x=400, y=300)
 
             self.actualitzar_dades()

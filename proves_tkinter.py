@@ -55,6 +55,7 @@ class Tkinter(object):
             self.sensor2.set("- -"+" W")
             self.sensor3.set("- -"+" W")
 
+            self.database.get_database()
 
             self.app1.mainloop()
 
@@ -113,36 +114,49 @@ class Tkinter(object):
 
         def eleccio_base_dades(self):
 
+            self.destruir_finestra("app2")
+            self.nova_finestra()
+
+            def nova_database():
+                self.base = self.txtbase.get()
+                crear_database()
+
+            def vella_database():
+                self.base = combo.get()
+                crear_database()
 
             def crear_database():
 
-                database = self.txtbase.get()
-                self.database.create_database(database)
+                self.database.create_database(self.base)
                 self.boto_comen = Button(self.app2,text="Començar",command=self.lectura_dades,
                                          highlightbackground="gold3", highlightthickness=3,
                                          activebackground="gold", bg="gold2")
                 self.boto_comen.place(x=360,y=375)
 
 
-            self.destruir_finestra("app2")
-            self.nova_finestra()
-
             text = "Especifica el nom de la base de dades\n i de cada linia de mesura:"
             self.lbl = Label(self.app2,text=text, bg="khaki", justify= CENTER, pady=15,
                             font=self.myFont4, highlightbackground="gold3", highlightthickness=3)
             self.lbl.place(x=220, y=15)
 
+            self.entradabase = StringVar()
             self.lbl_bd = Label(self.app2,text="Base de dades:", bg="khaki",
                                 highlightbackground="gold3", highlightthickness=3)
-            self.lbl_bd.place(x=360,y=100)
-
-            self.entradabase = StringVar()
             self.txtbase = Entry(self.app2, textvariable=self.entradabase, bg="ivory2")
-            self.txtbase.place(x=325, y=125)
-            self.boto_guardar = Button(self.app2,text="Guardar", bg="gold2",command=crear_database,
+            self.boto_guardar = Button(self.app2,text="Crear", bg="gold2",command=nova_database,
                                         highlightbackground="gold3", highlightthickness=3,
                                         activebackground="gold")
-            self.boto_guardar.place(x=375,y=150)
+            self.combo =ttk.Combobox(self.app2)
+            self.combo['values']=self.database.llista_databases
+            self.boto_guardar1 = Button(self.app2,text="Utilitzar", bg="gold2",command=vella_database,
+                                        highlightbackground="gold3", highlightthickness=3,
+                                        activebackground="gold")
+
+            self.lbl_bd.place(x=360,y=100)
+            self.txtbase.place(x=200, y=125)
+            self.boto_guardar.place(x=250,y=150)
+            self.combo.place(x=440,y=125)
+            self.boto_guardar1.place(x=500,y=150)
 
             if self.linies <= 3:
 

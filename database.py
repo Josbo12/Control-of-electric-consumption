@@ -53,9 +53,21 @@ class Database(object):
 
         def get_database(self):
 
-            self.llista_databses = []
+            self.llista_databases = []
             dbs = self.client.get_list_database()
-        
+            print dbs
+            print type(dbs)
+            print type(dbs[0])
+            b = dbs[0]
+            for x in dbs:
+                for key, value in x.iteritems():
+                    temp = [value]
+                #print temp
+                ep = u", ".join(temp)
+                #print ep
+                self.llista_databases.append(ep)
+
+
 
 
 

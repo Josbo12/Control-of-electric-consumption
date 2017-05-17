@@ -10,10 +10,13 @@ import time
 from ast import literal_eval
 
 
+
 class Database(object):
 
         def __init__(self):
             super(Database, self).__init__()
+
+
 
             self.USER = 'root'
             self.PASSWORD = 'root'
@@ -25,25 +28,27 @@ class Database(object):
 
         def create_database(self, dbname):
 
-
+             self.DBNAME = dbname
              self.client.create_database(dbname)
 
-        def insert_data(self):
+        def insert_data(self, a,b,c):
+
+            metric="piupiu"
             try:
                    series=[]
                    now = datetime.datetime.today()
                    pointValues = {
                            "measurement": metric,
                            "fields":{
-                                 "Pinça 1": self.a,
-                                 "Pinça 2": self.b,
-                                 "Pinça 2": self.c
+                                 "Pinça 1": a,
+                                 "Pinça 2": b,
+                                 "Pinça 3": c
                              },
                        }
 
                    series.append(pointValues)
 
-
+                   self.client = InfluxDBClient(self.host, self.port, self.USER, self.PASSWORD)
                    retention_policy = 'awesome_policy'
                    self.client.create_retention_policy(retention_policy, '20w', 3, default=True)
                    self.client.write_points(series, retention_policy=retention_policy)

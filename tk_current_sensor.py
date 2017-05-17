@@ -4,7 +4,7 @@
 import datetime
 import random
 import time
-from database import Database
+
 #import serial
 
 
@@ -12,7 +12,7 @@ class PowerServer(object):
 
         def __init__(self):
             super(PowerServer, self).__init__()
-            self.database = Database()
+
 
 
 
@@ -22,9 +22,9 @@ class PowerServer(object):
             #    try:
 
 
-                               a = random.randrange(10)
-                               b = random.randrange(50)
-                               c = random.randrange(100)
+                               self.a = random.randrange(10)
+                               self.b = random.randrange(50)
+                               self.c = random.randrange(100)
 
                                #response = ser.readline()
                                #self.z = response.split(",")
@@ -35,7 +35,7 @@ class PowerServer(object):
                                 #   self.z[i]=int(self.z[i])
 
                                #if len(self.z)>=2:
-                               self.database.insert_data(a, b, c)
+
 
 
 

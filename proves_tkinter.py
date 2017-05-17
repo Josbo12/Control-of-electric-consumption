@@ -241,7 +241,10 @@ class Tkinter(object):
 
         def actualitzar_dades(self):
 
+                self.database.insert_data()
                 self.sensor.read_sensor()
+
+
 
                 if self.linies <= 3:
                     self.sensor1.set(str(self.sensor.a)+" W")
@@ -254,7 +257,7 @@ class Tkinter(object):
                     self.lectura3.config(text=self.sensor3.get())
 
                 self.app2.after(5000, self.actualitzar_dades)
-                
+
 
 
 

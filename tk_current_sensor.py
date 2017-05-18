@@ -14,9 +14,6 @@ class PowerServer(object):
             super(PowerServer, self).__init__()
 
 
-
-
-
         def read_sensor(self):
 
             #    try:

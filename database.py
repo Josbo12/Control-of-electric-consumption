@@ -33,23 +33,20 @@ class Database(object):
 
              self.DBNAME = dbname
              self.client.create_database(self.DBNAME)
-             print "creooooooo"
-             print self.DBNAME
 
         def insert_data(self):
 
                    self.powerserver.read_sensor()
-                   metric = "hola"
+                   metric = "mesures"
 
-            #try:
                    series=[]
                    now = datetime.datetime.today()
                    pointValues = {
                            "measurement": metric,
                            "fields":{
-                                 "Pinça 4": self.powerserver.a,
-                                 "Pinça 5": self.powerserver.b,
-                                 "Pinça 6": self.powerserver.c
+                                 "Pinça 1": self.powerserver.a,
+                                 "Pinça 2": self.powerserver.b,
+                                 "Pinça 3": self.powerserver.c
                              },
                        }
 
@@ -60,28 +57,19 @@ class Database(object):
                    self.client.create_retention_policy(retention_policy, '20w', 3, default=True)
                    self.client.write_points(series, retention_policy=retention_policy)
 
-            #except ValueError:
-                #print "Error al introduir les dades"
 
-        def get_values(self):
 
-            result = self.client.query("select * from simba")
-            print "RESULTAT"
-            print result
+
         def get_database(self):
 
             self.llista_databases = []
             dbs = self.client.get_list_database()
-            print dbs
-            print type(dbs)
-            print type(dbs[0])
-            b = dbs[0]
             for x in dbs:
                 for key, value in x.iteritems():
                     temp = [value]
-                #print temp
+
                 ep = u", ".join(temp)
-                #print ep
+
                 self.llista_databases.append(ep)
 
 

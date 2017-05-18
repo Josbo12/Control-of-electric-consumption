@@ -63,6 +63,11 @@ class Database(object):
             #except ValueError:
                 #print "Error al introduir les dades"
 
+        def get_values(self):
+
+            result = self.client.query("select * from simba")
+            print "RESULTAT"
+            print result
         def get_database(self):
 
             self.llista_databases = []

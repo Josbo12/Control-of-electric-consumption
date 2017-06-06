@@ -17,16 +17,12 @@ class Database(object):
         def __init__(self):
             super(Database, self).__init__()
 
-
             self.powerserver = PowerServer()
             self.USER = 'root'
             self.PASSWORD = 'root'
-            #ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
             self.host ='localhost'
             self.port = 8086
             self.client = InfluxDBClient(self.host, self.port, self.USER, self.PASSWORD)
-
-
 
 
         def create_database(self, dbname):
@@ -58,8 +54,6 @@ class Database(object):
                    self.client.write_points(series, retention_policy=retention_policy)
 
 
-
-
         def get_database(self):
 
             self.llista_databases = []
@@ -71,10 +65,6 @@ class Database(object):
                 ep = u", ".join(temp)
 
                 self.llista_databases.append(ep)
-
-
-
-
 
 
 if __name__ == "__main__":

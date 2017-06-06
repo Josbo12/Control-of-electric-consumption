@@ -9,6 +9,7 @@ import ttk
 from tk_current_sensor import PowerServer
 from database import Database
 import time
+from subprocess import call
 
 
 class Tkinter(object):
@@ -104,14 +105,14 @@ class Tkinter(object):
                 lbl = Label(self.app2, text=text, font=self.myFont, bg="ivory2",
                                 justify= CENTER, pady=15)
 
-                spin_linies = Spinbox(self.app2, font=self.myFont2, bg="ivory2",
+                self.spin_linies = Spinbox(self.app2, font=self.myFont2, bg="ivory2",
                                 from_=1, to=3, width=10, borderwidth=2)
 
                 boto_continuar = Button(self.app2, text="Continuar", font=self.myFont,
                                 bg="ivory2", command=linies)
 
                 lbl.place(x=190,y=100)
-                spin_linies.place(x=280,y=200)
+                self.spin_linies.place(x=280,y=200)
                 boto_continuar.place(x=325, y=300)
 
 
@@ -127,6 +128,8 @@ class Tkinter(object):
                 #Destruim finestra anterior i creem una nova
                 self.destruir_finestra("app2")
                 self.nova_finestra()
+
+
 
                 def nova_database():
 
@@ -145,14 +148,15 @@ class Tkinter(object):
 
                         #Desplegable amb totes les bases de dades i boto per seleccionar
                         self.desplegable = ttk.Combobox(self.app2)
-                        self.desplegable['values']=self.database.llista_databases
+                        self.desplegable['values'] = self.database.llista_databases
+                        self.desplegable.current(0)
 
                         boto_utilitzar = Button(self.app2,text="Utilitzar", bg="gold2",command=vella_database,
                                                     highlightbackground="gold3", highlightthickness=3,
                                                     activebackground="gold")
 
-                        self.desplegable.place(x=440,y=125)
-                        boto_utilitzar.place(x=500,y=150)
+                        self.desplegable.place(x=440,y=95)
+                        boto_utilitzar.place(x=500,y=120)
 
                 def vella_database():
 
@@ -176,8 +180,8 @@ class Tkinter(object):
 
 
                 #Etiquetes, botons i entrades de text per escollir la base de dades
-                text = "Especifica el nom de la base de dades\n i de cada linia de mesura:"
-                lbl = Label(self.app2,text=text, bg="khaki", justify= CENTER, pady=15,
+                text = "Utilitza una base de dades o crea'n una de nova"
+                lbl = Label(self.app2,text=text, bg="khaki", justify= CENTER, pady=10,
                                 font=self.myFont4, highlightbackground="gold3", highlightthickness=3)
 
                 #Variable a la qual assignarem el nom de la base de dades
@@ -199,11 +203,23 @@ class Tkinter(object):
                                             highlightbackground="gold3", highlightthickness=3,
                                             activebackground="gold")
 
-                lbl.place(x=220, y=15)
-                lbl_bd.place(x=360,y=100)
-                self.txtbase.place(x=200, y=125)
-                boto_crear.place(x=200,y=150)
-                boto_escollir.place(x=300,y=150)
+                lbl_temps_lectura = Label(self.app2,text="Temps entre lectures (segons):", bg="khaki",
+                                    highlightbackground="gold3", highlightthickness=3)
+                self.temps_lectura = ttk.Combobox(self.app2)
+                self.temps_lectura['values']=['5','10','15','30','60','300','600','900']
+                self.temps_lectura.current(0)
+
+
+
+                lbl.place(x=220, y=10)
+                lbl_bd.place(x=360,y=70)
+                self.txtbase.place(x=200, y=95)
+                boto_crear.place(x=200,y=120)
+                boto_escollir.place(x=300,y=120)
+                lbl_temps_lectura.place(x=440,y=200)
+                self.temps_lectura.place(x=440,y=225)
+                comand = "matchbox-keyboard"
+                call(comand)
 
 
                 #Etiquetes i entrades de text per el nom de cada linia de mesura
@@ -218,8 +234,8 @@ class Tkinter(object):
 
                     self.txtpin1 = Entry(self.app2, textvariable=self.entrada1, bg="ivory2")
 
-                    lbl_pin1.place(x=385,y=200)
-                    self.txtpin1.place(x=325,y=225)
+                    lbl_pin1.place(x=280,y=200)
+                    self.txtpin1.place(x=220,y=225)
 
 
                 if self.linies != 1:
@@ -231,8 +247,8 @@ class Tkinter(object):
 
                     self.txtpin2 = Entry(self.app2, textvariable=self.entrada2,  bg="ivory2")
 
-                    lbl_pin2.place(x=385,y=250)
-                    self.txtpin2.place(x=325,y=275)
+                    lbl_pin2.place(x=280,y=250)
+                    self.txtpin2.place(x=220,y=275)
 
                 if self.linies == 3:
 
@@ -243,11 +259,14 @@ class Tkinter(object):
 
                     self.txtpin3 = Entry(self.app2, textvariable=self.entrada3,  bg="ivory2")
 
-                    lbl_pin3.place(x=385,y=300)
-                    self.txtpin3.place(x=325,y=325)
+                    lbl_pin3.place(x=280,y=300)
+                    self.txtpin3.place(x=220,y=325)
 
 
         def lectura_dades(self):
+
+            #Guardem la variable del temps entre lectures en una variable entera
+            self.temps = int(self.temps_lectura.get())
 
             self.destruir_finestra("app2")
             self.nova_finestra()
@@ -314,7 +333,7 @@ class Tkinter(object):
                     self.lectura3.config(text=self.sensor3.get())
 
                 #Eecutem aquesta funció cada x segons
-                self.app2.after(5000, self.actualitzar_dades)
+                self.app2.after(self.temps*1000, self.actualitzar_dades)
 
 
 

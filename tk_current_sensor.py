@@ -7,6 +7,8 @@ import time
 
 import serial
 
+ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+
 
 class PowerServer(object):
 
@@ -21,21 +23,25 @@ class PowerServer(object):
 
 
 
-                               ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+                               
 
                                response = ser.readline()
                                self.z = response.split(",")
+                              # self.y = map (float, self.z[2][:-2])
+                              # print self.y
+                               print "self.z"
+                               print self.z
 
+                               self.z.pop()
+                               
                                self.z = map(float, self.z)
-
-            #    try:
-                               self.a = random.randrange(10)
-                               self.b = random.randrange(50)
-                               self.c = random.randrange(100)
-
-
+                               
+                               print "self.z"
+                               print self.z            
+      
                                for i in range(len(self.z)):
                                    self.z[i]=int(self.z[i])
+                                   
 
                                if len(self.z)>=2:
                                    print "power 1 %s watts" % z[0]

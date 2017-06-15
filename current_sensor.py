@@ -4,7 +4,7 @@ from influxdb.client import InfluxDBClientError
 import datetime
 import random
 import time
-#import serial
+import serial
 
 
 
@@ -12,7 +12,7 @@ USER = 'root'
 PASSWORD = 'root'
 DBNAME = 'diferencial_db'
 
-#ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
 host ='localhost'
 port = 8086
 
@@ -34,19 +34,25 @@ class PowerServer(object):
                 try:
                        while True:
 
-                            self.a = random.randrange(10)
-                            self.b = random.randrange(50)
-                            self.c = random.randrange(100)
-                              # response = ser.readline()
-                              # self.z = response.split(",")
-                              # self.z.pop()
-                              # self.z = map(float, self.z)
-
-                               #for i in range(len(self.z)):
-                                #   self.z[i]=int(self.z[i])
-
-                               #if len(self.z)>=2:
-                            self.insert_data()
+                          #  self.a = random.randrange(10)
+                         #   self.b = random.randrange(50)
+                        #    self.c = random.randrange(100)
+                              response = ser.readline()                          
+                                                          
+                              self.z = response.split(",")
+                              self.z = [x.replace("\r\n","") for x in self.z]                   
+                              print "eii" 
+                              print self.z 
+                              #self.z.pop()
+                              self.z = map(float, self.z)
+                              print "self.z"
+                              print self.z
+                              for i in range(len(self.z)):
+                                   self.z[i]=int(self.z[i])
+                                   print self.z[i]
+                              time.sleep(5)
+                             # if len(self.z)>=2:
+                                
 
 
 

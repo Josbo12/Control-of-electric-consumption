@@ -7,6 +7,8 @@ import time
 
 #import serial
 
+ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+
 
 class PowerServer(object):
 
@@ -19,29 +21,26 @@ class PowerServer(object):
 
                 try:
 
-                               ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
-                               response = ser.readline()
-                               self.z = response.split(",")
 
+                               ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+
+                               self.z = response.split(",")
+                               self.z = [x.replace("\r\n","") for x in self.z]
+                               #self.z.pop()
                                self.z = map(float, self.z)
 
-            #    try:
-                               self.a = random.randrange(10)
-                               self.b = random.randrange(50)
-                               self.c = random.randrange(100)
-
-
                                for i in range(len(self.z)):
-                                   self.z[i]=int(self.z[i])
+                                    self.z[i]=int(self.z[i])
 
                                if len(self.z)>=2:
                                    print "power 1 %s watts" % z[0]
                                    print "power 2 %s watts" % z[1]
 
-                                   print "power 1 %s watts" % z[2][:-2]
+                                   print "power 1 %s watts" % z[2]
+                               time.sleep(5)
 
-                #except KeyboardInterrupt:
-                #    print "Lectura aturada per teclat"
+
+                
 
 
                 except KeyboardInterrupt:

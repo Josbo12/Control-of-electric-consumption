@@ -5,9 +5,9 @@ import datetime
 import random
 import time
 
-#import serial
+import serial
 
-ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+#ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
 
 
 class PowerServer(object):

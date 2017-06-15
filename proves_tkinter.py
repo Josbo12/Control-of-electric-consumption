@@ -270,8 +270,8 @@ class Tkinter(object):
             #Guardem la variable del temps entre lectures en una variable entera
             self.temps = int(self.temps_lectura.get())
 
-            self.destruir_finestra("app2")
-            self.nova_finestra()
+            self.destroy_window("app2")
+            self.new_window()
 
             #Creem les etiquetes on es mostraran les dades en funcio de les linies elegides
             if self.linies <= 3:

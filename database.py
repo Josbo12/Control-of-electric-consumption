@@ -45,9 +45,9 @@ class Database(object):
                    pointValues = {
                            "measurement": metric,
                            "fields":{
-                                 "Pinça 1": self.powerserver.a,
-                                 "Pinça 2": self.powerserver.b,
-                                 "Pinça 3": self.powerserver.c
+                                 "Pinça 1": self.powerserver.z[0],
+                                 "Pinça 2": self.powerserver.z[1],
+                                 "Pinça 3": self.powerserver.z[2]
                              },
                        }
 

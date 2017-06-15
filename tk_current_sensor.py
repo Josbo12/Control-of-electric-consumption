@@ -33,11 +33,11 @@ class PowerServer(object):
                                     self.z[i]=int(self.z[i])
 
                                if len(self.z)>=2:
-                                   print "power 1 %s watts" % z[0]
-                                   print "power 2 %s watts" % z[1]
+                                   print "power 1 %s watts" % self.z[0]
+                                   print "power 2 %s watts" % self.z[1]
 
-                                   print "power 1 %s watts" % z[2]
-                               time.sleep(5)
+                                   print "power 1 %s watts" % self.z[2]
+                               
 
 
 

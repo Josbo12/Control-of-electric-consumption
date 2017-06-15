@@ -325,13 +325,13 @@ class Tkinter(object):
 
                 #Actualitsem les dades amb les lectures actuals
                 if self.linies <= 3:
-                    self.sensor1.set(str(self.sensor.a)+" W")
+                    self.sensor1.set(str(self.sensor.z[0])+" W")
                     self.lectura1.config(text=self.sensor1.get())
                 if self.linies != 1:
-                    self.sensor2.set(str(self.sensor.b)+" W")
+                    self.sensor2.set(str(self.sensor.z[1])+" W")
                     self.lectura2.config(text=self.sensor2.get())
                 if self.linies == 3:
-                    self.sensor3.set(str(self.sensor.c)+" W")
+                    self.sensor3.set(str(self.sensor.z[2])+" W")
                     self.lectura3.config(text=self.sensor3.get())
 
                 #Eecutem aquesta funció cada x segons

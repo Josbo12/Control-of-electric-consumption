@@ -5,7 +5,7 @@ import datetime
 import random
 import time
 
-import serial
+#import serial
 
 
 class PowerServer(object):
@@ -19,10 +19,7 @@ class PowerServer(object):
 
                 try:
 
-
-
                                ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
-
                                response = ser.readline()
                                self.z = response.split(",")
 
@@ -42,12 +39,6 @@ class PowerServer(object):
                                    print "power 2 %s watts" % z[1]
 
                                    print "power 1 %s watts" % z[2][:-2]
-
-
-
-
-
-
 
                 #except KeyboardInterrupt:
                 #    print "Lectura aturada per teclat"

@@ -9,7 +9,8 @@ import ttk
 from tk_current_sensor import PowerServer
 from database import Database
 import time
-from subprocess import call
+import commands
+import os
 
 
 class Tkinter(object):
@@ -44,19 +45,21 @@ class Tkinter(object):
 
                 #Insertem el text de les instruccions a seguir
                 lbl = Label(self.app1,text=" Instruccions d'us:"
-                            "\n\n  Primer de tot assegura't\n"
+                            "\n\n  - Primer de tot assegura't\n"
                             " de tenir conectades les pinces que utilitzaras.\n"
                             "  A la part superior de les pinces hi ha un fletxa\n"
-                            " que s'ha de col·locar en direcció de la corrent",
+                            " que s'ha de col·locar en direcció de la corrent\n"
+                            "  - Si disposes de connexió a internet configura-la\n"
+                            " a la part superior de l'esquerra de la pantalla",
                              justify=LEFT, font=self.myFont,bg="khaki",
                              highlightbackground="gold3", highlightthickness=3, padx=10, )
                 lbl.place(x=150,y=100)
 
                 #Boto per continuar despres de llegir les instruccions
-                boto_continuar = Button(self.app1,text="Continuar",font=self.myFont,command=self.tipus_instalacio,
+                button_continuar = Button(self.app1,text="Continuar",font=self.myFont,command=self.tipus_instalacio,
                               bg="khaki", bd=3, activebackground="gold",relief=RIDGE, overrelief=GROOVE,
                               highlightbackground="gold3", highlightthickness=3 )
-                boto_continuar.place(x=350,y=350)
+                button_continuar.place(x=350,y=350)
 
 
                 self.app1.mainloop()
@@ -65,32 +68,32 @@ class Tkinter(object):
         def tipus_instalacio(self):
 
                 #Destruim finestra anterior i creem una nova
-                self.amagar_finestra("app1")
-                self.nova_finestra()
+                self.hide_window("app1")
+                self.new_window()
 
                 #Nova etiqueta amb dos botons per elegir la instalació
                 text = "Escull el tipus d'instalació"
                 lbl = Label(self.app2,text=text, font=self.myFont, justify= CENTER, bg="khaki",
                                  padx=2,highlightbackground="gold", highlightthickness=3)
 
-                boto_mono = Button(self.app2,text="MONOFÀSIC",font=self.myFont2, bg="khaki",
+                button_mono = Button(self.app2,text="MONOFÀSIC",font=self.myFont2, bg="khaki",
                                          bd=3, activebackground="gold",relief=RIDGE,
                                          overrelief=GROOVE, width=12, height=3, command=self.monofasic)
 
-                boto_tri = Button(self.app2,text="TRIFÀSIC",font=self.myFont2, bg="khaki",
+                button_tri = Button(self.app2,text="TRIFÀSIC",font=self.myFont2, bg="khaki",
                                          bd=3, activebackground="gold",relief=RIDGE,
                                          overrelief=GROOVE, width=12, height=3, command=self.trifasic)
 
                 lbl.place(x=250, y=100)
-                boto_mono.place(x=150,y=270)
-                boto_tri.place(x=410,y=270)
+                button_mono.place(x=150,y=270)
+                button_tri.place(x=410,y=270)
 
 
         def monofasic(self):
 
                 #Destruim finestra anterior i creem una nova
-                self.destruir_finestra("app2")
-                self.nova_finestra()
+                self.destroy_window("app2")
+                self.new_window()
 
                 def linies():
 
@@ -102,18 +105,18 @@ class Tkinter(object):
 
                 #Etiqueta i Spin per escollir el nombre de linies monofàsiques a mesurar
                 text = "Escull el nombre de linies a mesurar:"
-                lbl = Label(self.app2, text=text, font=self.myFont, bg="ivory2",
-                                justify= CENTER, pady=15)
+                lbl = Label(self.app2,text=text, font=self.myFont, justify= CENTER, bg="khaki",
+                                 padx=2,highlightbackground="gold", highlightthickness=3)
 
                 self.spin_linies = Spinbox(self.app2, font=self.myFont2, bg="ivory2",
                                 from_=1, to=3, width=10, borderwidth=2)
 
-                boto_continuar = Button(self.app2, text="Continuar", font=self.myFont,
-                                bg="ivory2", command=linies)
+                button_continuar = Button(self.app2, text="Continuar", font=self.myFont,
+                                bg="khaki",activebackground="gold", command=linies)
 
                 lbl.place(x=190,y=100)
                 self.spin_linies.place(x=280,y=200)
-                boto_continuar.place(x=325, y=300)
+                button_continuar.place(x=325, y=300)
 
 
         def trifasic(self):
@@ -126,8 +129,8 @@ class Tkinter(object):
         def eleccio_base_dades(self):
 
                 #Destruim finestra anterior i creem una nova
-                self.destruir_finestra("app2")
-                self.nova_finestra()
+                self.destroy_window("app2")
+                self.new_window()
 
 
 
@@ -148,34 +151,34 @@ class Tkinter(object):
 
                         #Desplegable amb totes les bases de dades i boto per seleccionar
                         self.desplegable = ttk.Combobox(self.app2)
-                        self.desplegable['values'] = self.database.llista_databases
+                        self.desplegable['values'] = self.database.list_databases
                         self.desplegable.current(0)
 
-                        boto_utilitzar = Button(self.app2,text="Utilitzar", bg="gold2",command=vella_database,
+                        button_utilitzar = Button(self.app2,text="Utilitzar", bg="gold2",command=vella_database,
                                                     highlightbackground="gold3", highlightthickness=3,
                                                     activebackground="gold")
 
                         self.desplegable.place(x=440,y=95)
-                        boto_utilitzar.place(x=500,y=120)
+                        button_utilitzar.place(x=500,y=120)
 
                 def vella_database():
 
                         #Obtenim el valor selecconat al desplegable i cridem a la seguent funció
                         self.base = self.desplegable.get()
-                        crear_database()
+                        utilitzar_database()
 
 
-                def crear_database():
+                def utilitzar_database():
 
                         #Creem la base de dades per poderla utilitzar, amb el valor obtingut anterior
                         self.database.create_database(self.base)
 
                         #Boto per començar les lectures
-                        boto_comen = Button(self.app2,text="Començar",command=self.lectura_dades,
+                        button_comen = Button(self.app2,text="Començar",command=self.lectura_dades,
                                                  highlightbackground="gold3", highlightthickness=3,
                                                  activebackground="gold", bg="gold2")
 
-                        boto_comen.place(x=360,y=375)
+                        button_comen.place(x=360,y=375)
 
 
 
@@ -194,12 +197,12 @@ class Tkinter(object):
                 self.txtbase = Entry(self.app2, textvariable=self.entradabase, bg="ivory2")
 
                 #Boto per crear la base de dades
-                boto_crear = Button(self.app2,text="Crear", bg="gold2",command=nova_database,
+                button_crear = Button(self.app2,text="Crear", bg="gold2",command=nova_database,
                                             highlightbackground="gold3", highlightthickness=3,
                                             activebackground="gold")
 
                 #Boto per escollir una base de dades ja guardada
-                boto_escollir = Button(self.app2,text="Escolleix una ...", bg="gold2",command=llista_base_dades,
+                button_escollir = Button(self.app2,text="Escolleix una ...", bg="gold2",command=llista_base_dades,
                                             highlightbackground="gold3", highlightthickness=3,
                                             activebackground="gold")
 
@@ -214,12 +217,11 @@ class Tkinter(object):
                 lbl.place(x=220, y=10)
                 lbl_bd.place(x=360,y=70)
                 self.txtbase.place(x=200, y=95)
-                boto_crear.place(x=200,y=120)
-                boto_escollir.place(x=300,y=120)
+                button_crear.place(x=200,y=120)
+                button_escollir.place(x=300,y=120)
                 lbl_temps_lectura.place(x=440,y=200)
                 self.temps_lectura.place(x=440,y=225)
-                comand = "matchbox-keyboard"
-                call(comand)
+
 
 
                 #Etiquetes i entrades de text per el nom de cada linia de mesura
@@ -341,17 +343,49 @@ class Tkinter(object):
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        def nova_finestra(self):
+        def new_window(self):
 
             #funció per crear la finestra
+            def ip():
+
+
+                ''' Construye una ventana de diálogo '''
+
+                self.app_ip = Toplevel()
+                self.app_ip.title("Adreça IP")
+                self.app_ip.geometry("200x150")
+
+                ip_adress = commands.getoutput ("ifconfig lo | grep inet | awk '{ print $2 }'")
+
+                lbl = Label(self.app_ip,text=ip_adress, font=self.myFont, justify= CENTER, bg="khaki",
+                              padx=2,highlightbackground="gold", highlightthickness=3)
+                lbl.pack()
+
+                boton = ttk.Button(self.app_ip, text='Sortir',
+                                   command=self.app_ip.destroy)
+                boton.pack(side=BOTTOM, padx=20, pady=20)
+
+            def exit():
+                print "sortir"
+
             self.app2 =tk.Toplevel()
             self.app2.title("Control del consum electric")
             self.app2.geometry("800x480")
             self.fondo2 = PhotoImage(file="fondo.gif")
             self.lbl_Fondo2 = Label(self.app2, image=self.fondo2).place(x=0,y=0)
 
+            self.barraMenu = Menu(self.app2)
 
-        def destruir_finestra(self, finestra):
+            self.app2.config(menu=self.barraMenu)
+
+
+            self.barraMenu.add_command(label="Obtenir IP", command=ip)
+            self.barraMenu.add_command(label="  Sortir", command=exit)
+
+
+            #self.app2.mainloop()
+
+        def destroy_window(self, finestra):
 
             #funció per destruir la finestra
             if finestra == "app1":
@@ -360,7 +394,7 @@ class Tkinter(object):
                 self.app2.destroy()
 
 
-        def amagar_finestra(self, finestra):
+        def hide_window(self, finestra):
 
             #funció per amagar la fiestra
             if finestra == "app1":

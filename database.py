@@ -17,6 +17,7 @@ class Database(object):
         def __init__(self):
             super(Database, self).__init__()
 
+            #Parametres oer defecte que definim a la base de dades
             self.powerserver = PowerServer()
             self.USER = 'root'
             self.PASSWORD = 'root'
@@ -27,12 +28,16 @@ class Database(object):
 
         def create_database(self, dbname):
 
-             self.DBNAME = dbname
-             self.client.create_database(self.DBNAME)
+            #Creem base de dades amb el nom que ens passa la funció
+            self.DBNAME = dbname
+            self.client.create_database(self.DBNAME)
 
         def insert_data(self):
 
+                   #lectura del sensor
                    self.powerserver.read_sensor()
+
+                   #Introduim les lectures a la base de dades
                    metric = "mesures"
 
                    series=[]
@@ -56,15 +61,18 @@ class Database(object):
 
         def get_database(self):
 
-            self.llista_databases = []
+            #funció per obtenir les bases de dades guardades
+            self.list_databases = []
             dbs = self.client.get_list_database()
+
+            #el que ens retorna la funció ho posem en una llista i separat
             for x in dbs:
                 for key, value in x.iteritems():
                     temp = [value]
 
-                ep = u", ".join(temp)
+                data = u", ".join(temp)
 
-                self.llista_databases.append(ep)
+                self.list_databases.append(data)
 
 
 if __name__ == "__main__":

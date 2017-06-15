@@ -23,7 +23,7 @@ class PowerServer(object):
 
 
                                ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
-
+                               response = ser.readline()                          
                                self.z = response.split(",")
                                self.z = [x.replace("\r\n","") for x in self.z]
                                #self.z.pop()
@@ -40,7 +40,7 @@ class PowerServer(object):
                                time.sleep(5)
 
 
-                
+
 
 
                 except KeyboardInterrupt:

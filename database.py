@@ -8,7 +8,7 @@ import datetime
 import random
 import time
 from ast import literal_eval
-from tk_current_sensor import PowerServer
+from lectures_sensor import PowerServer
 
 
 

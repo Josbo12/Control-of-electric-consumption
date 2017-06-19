@@ -6,7 +6,7 @@ from Tkinter import *
 import Tkinter as tk
 from tkFont import Font
 import ttk
-from tk_current_sensor import PowerServer
+from lectures_sensor import PowerServer
 from database import Database
 import time
 import commands

@@ -345,11 +345,8 @@ class Tkinter(object):
 
         def new_window(self):
 
-            #funció per crear la finestra
+
             def ip():
-
-
-                ''' Construye una ventana de diálogo '''
 
                 self.app_ip = Toplevel()
                 self.app_ip.title("Adreça IP")
@@ -366,8 +363,9 @@ class Tkinter(object):
                 boton.pack(side=BOTTOM, padx=20, pady=20)
 
             def exit():
-                print "sortir"
+                self.destroy_window(app1)
 
+            #funció per crear la finestra
             self.app2 =tk.Toplevel()
             self.app2.title("Control del consum electric")
             self.app2.geometry("800x480")
@@ -382,8 +380,6 @@ class Tkinter(object):
             self.barraMenu.add_command(label="Obtenir IP", command=ip)
             self.barraMenu.add_command(label="  Sortir", command=exit)
 
-
-            #self.app2.mainloop()
 
         def destroy_window(self, finestra):
 

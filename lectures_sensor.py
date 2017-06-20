@@ -17,11 +17,12 @@ class PowerServer(object):
 
 
                  try:
-                     
+
                     ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
                     #Obtenim resposta del port serial
                     response = ser.readline()
                     #separem resposta en comes
+                    print response
                     self.z = response.split(",")
                     #eliminem els salts de linia que puguin apareixer
                     self.z = [x.replace("\r\n","") for x in self.z]

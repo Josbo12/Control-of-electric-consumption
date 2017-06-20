@@ -319,7 +319,7 @@ class Tkinter(object):
         def actualitzar_dades(self):
 
                 #Cridem la funció per insertar les lectures a la base de dades
-                
+                self.database.insert_data()
                 #Cridem la funció per obtenir les lectures del sensor
                 self.sensor.read_sensor()
 
@@ -379,6 +379,7 @@ class Tkinter(object):
 
             self.barraMenu.add_command(label="Obtenir IP", command=ip)
             self.barraMenu.add_command(label="  Sortir", command=exit)
+
 
 
         def destroy_window(self, finestra):

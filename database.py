@@ -5,6 +5,7 @@
 from influxdb import InfluxDBClient
 from influxdb.client import InfluxDBClientError
 import datetime
+import random
 import time
 from ast import literal_eval
 from lectures_sensor import PowerServer
@@ -33,7 +34,8 @@ class Database(object):
 
         def insert_data(self):
 
-                   
+                   #lectura del sensor
+                   self.powerserver.read_sensor()
 
                    #Introduim les lectures a la base de dades
                    metric = "mesures"

@@ -5,12 +5,13 @@ import datetime
 import random
 import time
 import serial
+from database import Database
 
 class PowerServer(object):
 
         def __init__(self):
             super(PowerServer, self).__init__()
-
+            self.database = Database()
 
 
         def read_sensor(self):
@@ -32,6 +33,7 @@ class PowerServer(object):
                     #Convertim a int ja que influx només accepta int
                     for i in range(len(self.z)):
                             self.z[i]=int(self.z[i])
+                            self.database.insert_data()
 
                  except KeyboardInterrupt:
                     print "Lectura aturada per teclat"

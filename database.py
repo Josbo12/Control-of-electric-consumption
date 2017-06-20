@@ -7,7 +7,7 @@ from influxdb.client import InfluxDBClientError
 import datetime
 import time
 from ast import literal_eval
-from lectures_sensor import PowerServer
+
 
 
 
@@ -17,7 +17,7 @@ class Database(object):
             super(Database, self).__init__()
 
             #Parametres oer defecte que definim a la base de dades
-            self.powerserver = PowerServer()
+
             self.USER = 'root'
             self.PASSWORD = 'root'
             self.host ='localhost'
@@ -33,8 +33,7 @@ class Database(object):
 
         def insert_data(self):
 
-                   #lectura del sensor
-                   self.powerserver.read_sensor()
+
 
                    #Introduim les lectures a la base de dades
                    metric = "mesures"

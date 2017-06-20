@@ -26,8 +26,8 @@ class PowerServer(object):
                     #convertim els valors string en float
                     self.z = map(float, self.z)
 
-                       #Convertim a int ja que influx només accepta int
-                       for i in range(len(self.z)):
+                    #Convertim a int ja que influx només accepta int
+                    for i in range(len(self.z)):
                             self.z[i]=int(self.z[i])
 
                  except KeyboardInterrupt:

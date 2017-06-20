@@ -11,12 +11,14 @@ class PowerServer(object):
         def __init__(self):
             super(PowerServer, self).__init__()
 
-            ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
+
 
         def read_sensor(self):
 
 
                  try:
+                     
+                    ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
                     #Obtenim resposta del port serial
                     response = ser.readline()
                     #separem resposta en comes

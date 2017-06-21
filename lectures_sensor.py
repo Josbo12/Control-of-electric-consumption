@@ -25,15 +25,15 @@ class PowerServer(object):
                     self.z = [x.replace("\r\n","") for x in self.z]
                     #convertim els valors string en float
                     self.z = map(float, self.z)
-
+                    print self.z
                     #Convertim a int ja que influx només accepta int
                     for i in range(len(self.z)):
                             self.z[i]=int(self.z[i])
                     break
 
-                 #except:
-                #    print "Lectura aturada per teclat"
-                #    ser.close()
+                 except:
+                    print "Lectura aturada per teclat"
+                    ser.close()
 
 
 if __name__ == "__main__":

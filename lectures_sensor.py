@@ -34,7 +34,7 @@ class PowerServer(object):
                     self.database.insert_data(self.z[0], self.z[1], self.z[2])
                     break
 
-                 except:
+                except KeyboardInterrupt:
                     print "Lectura aturada per teclat"
                     ser.close()
 

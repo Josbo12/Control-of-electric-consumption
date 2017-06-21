@@ -319,10 +319,10 @@ class Tkinter(object):
         def actualitzar_dades(self):
 
                 #Cridem la funció per insertar les lectures a la base de dades
-                self.database.insert_data()
+                #self.database.insert_data()
                 #Cridem la funció per obtenir les lectures del sensor
-                self.database.read_sensor()
-
+                self.sensor.read_sensor()
+                self.database.insert_data(self.sensor.z[0],self.sensor.z[1],self.sensor.z[2])
                 #Actualitsem les dades amb les lectures actuals
                 if self.linies <= 3:
                     self.sensor1.set(str(self.sensor.z[0])+" W")

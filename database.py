@@ -32,10 +32,10 @@ class Database(object):
             self.DBNAME = dbname
             self.client.create_database(self.DBNAME)
 
-        def insert_data(self):
+        def insert_data(self, pin1, pin2, pin3):
 
                    #lectura del sensor
-                   self.powerserver.read_sensor()
+                   
 
                    #Introduim les lectures a la base de dades
                    metric = "mesures"
@@ -45,9 +45,9 @@ class Database(object):
                    pointValues = {
                            "measurement": metric,
                            "fields":{
-                                 "Pinça 1": self.powerserver.z[0],
-                                 "Pinça 2": self.powerserver.z[1],
-                                 "Pinça 3": self.powerserver.z[2]
+                                 "Pinça 1": pin1,
+                                 "Pinça 2": pin2,
+                                 "Pinça 3": pin3
                              },
                        }
 

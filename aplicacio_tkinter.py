@@ -319,9 +319,9 @@ class Tkinter(object):
         def actualitzar_dades(self):
 
                 #Cridem la funció per insertar les lectures a la base de dades
-                #self.database.insert_data()
+                self.database.insert_data()
                 #Cridem la funció per obtenir les lectures del sensor
-                self.sensor.read_sensor()
+                
 
                 #Actualitsem les dades amb les lectures actuals
                 if self.linies <= 3:
@@ -363,7 +363,7 @@ class Tkinter(object):
                 boton.pack(side=BOTTOM, padx=20, pady=20)
 
             def exit():
-                self.destroy_window(self.app1)
+                self.destroy_window(app1)
 
             #funció per crear la finestra
             self.app2 =tk.Toplevel()

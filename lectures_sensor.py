@@ -32,7 +32,7 @@ class PowerServer(object):
                     break
 
                  except:
-                    print "Lectura aturada per teclat"
+                    
                     ser.close()
 
 

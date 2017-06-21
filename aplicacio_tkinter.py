@@ -321,17 +321,17 @@ class Tkinter(object):
                 #Cridem la funció per insertar les lectures a la base de dades
                 self.database.insert_data()
                 #Cridem la funció per obtenir les lectures del sensor
-                
+
 
                 #Actualitsem les dades amb les lectures actuals
                 if self.linies <= 3:
-                    self.sensor1.set(str(self.sensor.z[0])+" W")
+                    self.sensor1.set(str(self.database.z[0])+" W")
                     self.lectura1.config(text=self.sensor1.get())
                 if self.linies != 1:
-                    self.sensor2.set(str(self.sensor.z[1])+" W")
+                    self.sensor2.set(str(self.database.z[1])+" W")
                     self.lectura2.config(text=self.sensor2.get())
                 if self.linies == 3:
-                    self.sensor3.set(str(self.sensor.z[2])+" W")
+                    self.sensor3.set(str(self.database.z[2])+" W")
                     self.lectura3.config(text=self.sensor3.get())
 
                 #Eecutem aquesta funció cada x segons
@@ -363,7 +363,7 @@ class Tkinter(object):
                 boton.pack(side=BOTTOM, padx=20, pady=20)
 
             def exit():
-                self.destroy_window(app1)
+                self.destroy_window(self.app1)
 
             #funció per crear la finestra
             self.app2 =tk.Toplevel()

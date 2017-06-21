@@ -16,7 +16,7 @@ class PowerServer(object):
         def read_sensor(self):
 
             while True:
-                 try:
+                try:
 
                     ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
                     #Obtenim resposta del port serial

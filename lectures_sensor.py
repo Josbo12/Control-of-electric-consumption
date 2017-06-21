@@ -11,8 +11,6 @@ class PowerServer(object):
         def __init__(self):
             super(PowerServer, self).__init__()
 
-            ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=1)
-
         def read_sensor(self):
 
             while True:
@@ -33,9 +31,9 @@ class PowerServer(object):
                             self.z[i]=int(self.z[i])
                     break
 
-                 except:
-                    print "Lectura aturada per teclat"
-                    ser.close()
+                 #except:
+                #    print "Lectura aturada per teclat"
+                #    ser.close()
 
 
 if __name__ == "__main__":

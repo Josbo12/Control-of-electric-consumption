@@ -321,7 +321,7 @@ class Tkinter(object):
                 #Cridem la funció per insertar les lectures a la base de dades
                 self.database.insert_data()
                 #Cridem la funció per obtenir les lectures del sensor
-
+                self.database.read_sensor()
 
                 #Actualitsem les dades amb les lectures actuals
                 if self.linies <= 3:

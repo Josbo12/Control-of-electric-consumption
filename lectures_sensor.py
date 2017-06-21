@@ -35,8 +35,7 @@ class PowerServer(object):
                     break
 
                 except KeyboardInterrupt:
-                    print "Lectura aturada per teclat"
-                    ser.close()
+                        ser.close()
 
 
 if __name__ == "__main__":

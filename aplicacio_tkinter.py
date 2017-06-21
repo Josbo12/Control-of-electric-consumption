@@ -319,7 +319,7 @@ class Tkinter(object):
         def actualitzar_dades(self):
 
                 #Cridem la funció per insertar les lectures a la base de dades
-                self.database.insert_data()
+                #self.database.insert_data()
                 #Cridem la funció per obtenir les lectures del sensor
                 self.sensor.read_sensor()
 

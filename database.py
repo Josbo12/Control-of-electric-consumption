@@ -8,7 +8,7 @@ import datetime
 import random
 import time
 from ast import literal_eval
-from lectures_sensor import PowerServer
+#from lectures_sensor import PowerServer
 
 
 
@@ -18,7 +18,7 @@ class Database(object):
             super(Database, self).__init__()
 
             #Parametres oer defecte que definim a la base de dades
-            self.powerserver = PowerServer()
+            #self.powerserver = PowerServer()
             self.USER = 'root'
             self.PASSWORD = 'root'
             self.host ='localhost'
@@ -32,10 +32,10 @@ class Database(object):
             self.DBNAME = dbname
             self.client.create_database(self.DBNAME)
 
-        def insert_data(self):
+        def insert_data(self, pinça1, pinça2, pinça3):
 
                    #lectura del sensor
-                   self.powerserver.read_sensor()
+                   #self.powerserver.read_sensor()
 
                    #Introduim les lectures a la base de dades
                    metric = "mesures"
@@ -45,9 +45,9 @@ class Database(object):
                    pointValues = {
                            "measurement": metric,
                            "fields":{
-                                 "Pinça 1": self.powerserver.z[0],
-                                 "Pinça 2": self.powerserver.z[1],
-                                 "Pinça 3": self.powerserver.z[2]
+                                 "Pinça 1": pinça1,
+                                 "Pinça 2": pinça2,
+                                 "Pinça 3": pinça3
                              },
                        }
 

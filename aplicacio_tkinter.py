@@ -364,8 +364,9 @@ class Tkinter(object):
                 boton.pack(side=BOTTOM, padx=20, pady=20)
 
             def exit():
+
+                self.destroy_window(self.app2)
                 self.destroy_window(self.app1)
-                self.destroy_window(app2)
 
             #funció per crear la finestra
             self.app2 =tk.Toplevel()
@@ -387,7 +388,8 @@ class Tkinter(object):
         def destroy_window(self, finestra):
 
             #funció per destruir la finestra
-            if finestra == "self.app1":
+            print finestra
+            if finestra == "app1":
                 self.app1.destroy()
             if finestra == "app2":
                 self.app2.destroy()

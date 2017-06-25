@@ -353,7 +353,7 @@ class Tkinter(object):
                 self.app_ip.title("Adreça IP")
                 self.app_ip.geometry("200x150")
 
-                ip_adress = commands.getoutput ("ifconfig lo | grep inet | awk '{ print $2 }'")
+                ip_adress = commands.getoutput ("ifconfig wlan0 | grep inet | awk '{ print $2 }'")
 
                 lbl = Label(self.app_ip,text=ip_adress, font=self.myFont, justify= CENTER, bg="khaki",
                               padx=2,highlightbackground="gold", highlightthickness=3)
@@ -365,6 +365,7 @@ class Tkinter(object):
 
             def exit():
                 self.destroy_window(self.app1)
+                self.destroy_window(self.app2)
 
             #funció per crear la finestra
             self.app2 =tk.Toplevel()
